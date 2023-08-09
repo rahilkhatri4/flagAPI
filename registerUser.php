@@ -7,6 +7,12 @@
     {
         if(isset($_POST["register"]) && $_POST["register"] != "")
         {
+            if($_POST["password"] != $_POST["confirmpassword"])
+            {
+                $response["success"] = false;
+                $response["error"] = "Passwords do not match";
+                goto end;
+            }
             $select = $db->prepare("SELECT COUNT(*) AS num FROM users WHERE email = ?");
             if($select == false)
             {
