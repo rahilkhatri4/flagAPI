@@ -39,7 +39,7 @@
                 }
             }
 
-            $insert = $db->prepare("INSERT INTO Users (name, gender, birthdate, email, password, bio, profilepic, campus, preferred_gender, fromage, toage)
+            $insert = $db->prepare("INSERT INTO users (name, gender, birthdate, email, password, bio, profilepic, campus, preferred_gender, fromage, toage)
             VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?);
             ");
             if($insert == false)
