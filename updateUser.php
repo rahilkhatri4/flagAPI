@@ -1,0 +1,34 @@
+<?php
+    require_once "dbcon.php";
+
+    $response["success"] = true;
+    try
+    {
+        $update = $db->prepare("UPDATE users SET name = ? , birthdate = ? , bio = ? , campus = ? , preferred_gender = ? , fromage = ? , toage = ? WHERE email = ?");
+        if($update == false)
+        {
+            $response["success"] = false;
+            $response["error"] = "Error Occurred - " . mysqli_error($db);
+            goto end;
+        }
+        else
+        {
+            $update->bind_param("sssssiis" , $_POST["name"] , $_POST["birthdate"] , $_POST["bio"] , $_POST["campus"] , $_POST["preferred_gender"] , $_POST["fromage"] , $_POST["toage"] , $_POST["email"]);
+            if($update->execute() == false)
+            {
+                $response["success"] = false;
+                $response["error"] = "Error Occurred - " . mysqli_error($db);
+                goto end;
+            }
+
+            end:;
+        }
+    }
+    catch(Exception $e)
+    {
+        $response["success"] = false;
+        $response["error"] = "Error Occurred - " . $e->getMessage();
+    }
+
+    echo json_encode($response);
+?>
