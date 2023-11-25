@@ -9,7 +9,7 @@
             && (isset($_POST["password"]) && $_POST["password"] != "")
         )
         {
-            $select = $db->prepare("SELECT email , password FROM users WHERE email = ?");
+            $select = $db->prepare("SELECT id , email , password FROM users WHERE email = ?");
             if($select == false)
             {
                 $response["success"] = false;
@@ -26,6 +26,7 @@
                     goto end;
                 }
                 $result = $select->get_result();
+                $row;
                 if(mysqli_num_rows($result) != 0)
                 {
                     $row = $result->fetch_assoc();
@@ -42,6 +43,7 @@
                     $response["error"] = "Authentication error";
                     goto end;
                 }
+                $response["userid"] = $row["id"];
             }
         }
         else
