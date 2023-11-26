@@ -2,10 +2,10 @@
     require_once "dbcon.php";
 
     $response["success"] = true;
-    $response["users"] = [];
+    $response["matches"] = [];
     try
     {
-        $select = $db->prepare("SELECT * FROM users WHERE id <> ? AND id NOT IN (SELECT user1id FROM matches WHERE user2id = ? UNION SELECT user2id FROM matches WHERE user1id = ?)");
+        $select = $db->prepare("SELECT id , name , profilepic FROM users WHERE id IN (SELECT user1id FROM matches WHERE user2id = ? UNION SELECT user2id FROM matches WHERE user1id = ?)");
         if($select == false)
         {
             $response["success"] = false;
@@ -14,7 +14,7 @@
         }
         else
         {
-            $select->bind_param("iii" , $_GET["id"], $_GET["id"], $_GET["id"]);
+            $select->bind_param("ii" , $_GET["id"] , $_GET["id"]);
             if($select->execute() == false)
             {
                 $response["success"] = false;
@@ -22,12 +22,9 @@
                 goto end;
             }
             $result = $select->get_result();
-            if(mysqli_num_rows($result) != 0)
+            while($row = $result->fetch_assoc())
             {
-                while($row = $result->fetch_assoc())
-                {
-                    array_push($response["users"] , $row);
-                }
+                array_push($response["matches"] , $row);
             }
         }
 
