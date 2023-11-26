@@ -5,11 +5,11 @@
     try
     {
         if(
-            (isset($_POST["email"]) && $_POST["email"] != "")
+            (isset($_POST["id"]) && $_POST["id"] != "")
             && (isset($_POST["password"]) && $_POST["password"] != "")
         )
         {
-            $select = $db->prepare("SELECT id , email , password FROM users WHERE email = ?");
+            $select = $db->prepare("SELECT id , password FROM users WHERE id = ?");
             if($select == false)
             {
                 $response["success"] = false;
@@ -18,7 +18,7 @@
             }
             else
             {
-                $select->bind_param("s" , $_POST["email"]);
+                $select->bind_param("s" , $_POST["id"]);
                 if($select->execute() == false)
                 {
                     $response["success"] = false;
@@ -43,7 +43,7 @@
                     $response["error"] = "Authentication error";
                     goto end;
                 }
-                $response["userid"] = $row["id"];
+                $response["id"] = $row["id"];
             }
         }
         else

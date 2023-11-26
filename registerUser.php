@@ -13,7 +13,7 @@
                 $response["error"] = "Passwords do not match";
                 goto end;
             }
-            $select = $db->prepare("SELECT COUNT(*) AS num FROM users WHERE email = ?");
+            $select = $db->prepare("SELECT COUNT(*) AS num FROM users WHERE id = ?");
             if($select == false)
             {
                 $response["success"] = false;
@@ -22,7 +22,7 @@
             }
             else
             {
-                $select->bind_param("s" , $_POST["email"]);
+                $select->bind_param("s" , $_POST["id"]);
                 if($select->execute() == false)
                 {
                     $response["success"] = false;
@@ -39,7 +39,7 @@
                 }
             }
 
-            $insert = $db->prepare("INSERT INTO users (name, gender, birthdate, email, password, bio, profilepic, campus, preferred_gender, fromage, toage)
+            $insert = $db->prepare("INSERT INTO users (id, name, gender, birthdate, password, bio, profilepic, campus, preferred_gender, fromage, toage)
             VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?);
             ");
             if($insert == false)
@@ -50,7 +50,7 @@
             }
             else
             {
-                $insert->bind_param("sssssssssii" , $_POST["name"] , $_POST["gender"] , $_POST["birthdate"] , $_POST["email"] , $_POST["password"] , $_POST["bio"] , $_POST["profilepic"] , $_POST["campus"] , $_POST["preferred_gender"] , $_POST["fromage"] , $_POST["toage"]);
+                $insert->bind_param("sssssssssii" , $_POST["id"] , $_POST["name"] , $_POST["gender"] , $_POST["birthdate"] , $_POST["password"] , $_POST["bio"] , $_POST["profilepic"] , $_POST["campus"] , $_POST["preferred_gender"] , $_POST["fromage"] , $_POST["toage"]);
                 if($insert->execute() == false)
                 {
                     $response["success"] = false;
