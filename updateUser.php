@@ -4,7 +4,7 @@
     $response["success"] = true;
     try
     {
-        $update = $db->prepare("UPDATE users SET name = ? , birthdate = ? , gender = ? , bio = ? , campus = ? , preferred_gender = ? , fromage = ? , toage = ? WHERE email = ?");
+        $update = $db->prepare("UPDATE users SET name = ? , birthdate = ? , gender = ? , bio = ? , campus = ? , preferred_gender = ? , fromage = ? , toage = ? WHERE id = ?");
         if($update == false)
         {
             $response["success"] = false;
@@ -13,7 +13,7 @@
         }
         else
         {
-            $update->bind_param("ssssssiis" , $_POST["name"] , $_POST["birthdate"] , $_POST["gender"] , $_POST["bio"] , $_POST["campus"] , $_POST["preferred_gender"] , $_POST["fromage"] , $_POST["toage"] , $_POST["email"]);
+            $update->bind_param("ssssssiii" , $_POST["name"] , $_POST["birthdate"] , $_POST["gender"] , $_POST["bio"] , $_POST["campus"] , $_POST["preferred_gender"] , $_POST["fromage"] , $_POST["toage"] , $_POST["id"]);
             if($update->execute() == false)
             {
                 $response["success"] = false;

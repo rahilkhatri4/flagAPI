@@ -5,9 +5,9 @@
    $response["success"] = true;
    try
    {
-      if(isset($_GET["email"]) && $_GET["email"] != "")
+      if(isset($_GET["id"]) && $_GET["id"] != "")
       {
-         $select = $db->prepare("SELECT * FROM users WHERE email = ?");
+         $select = $db->prepare("SELECT * FROM users WHERE id = ?");
          if($select == false)
          {
             $response["success"] = false;
@@ -16,7 +16,7 @@
          }
          else
          {
-            $select->bind_param("s" , $_GET["email"]);
+            $select->bind_param("i" , $_GET["id"]);
             if($select->execute() == false)
             {
                $response["success"] = false;
