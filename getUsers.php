@@ -5,7 +5,7 @@
     $response["users"] = [];
     try
     {
-        $select = $db->prepare("SELECT * FROM users WHERE id <> ? AND id NOT IN (SELECT user1id FROM matches WHERE user2id = ? UNION SELECT user2id FROM matches WHERE user1id = ?)");
+        $select = $db->prepare("SELECT * FROM users WHERE id <> ? AND id NOT IN (SELECT user1id FROM matches WHERE user2id = ? UNION SELECT user2id FROM matches WHERE user1id = ?) ORDER BY boost DESC");
         if($select == false)
         {
             $response["success"] = false;
